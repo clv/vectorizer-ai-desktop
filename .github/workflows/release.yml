@@ -69,3 +69,20 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      - name: Create Windows portable ZIP
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        run: ./scripts/build-portable-windows.ps1 -SkipBuild
+
+      - name: Upload Windows portable ZIP
+        if: matrix.platform == 'windows-latest'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $zip = Get-ChildItem -Path dist-portable -Filter '*.zip' | Select-Object -First 1
+          if (-not $zip) {
+            throw "Portable ZIP was not created."
+          }
+          gh release upload $env:GITHUB_REF_NAME $zip.FullName --clobber --repo $env:GITHUB_REPOSITORY

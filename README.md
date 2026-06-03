@@ -51,13 +51,33 @@ cargo check
 Run the app in development:
 
 ```powershell
-npm run tauri dev
+npm run desktop:dev
 ```
+
+This is the fastest local loop. It opens the native Tauri window and serves the frontend through Vite with live rebuilds.
 
 Build desktop bundles:
 
 ```powershell
 npm run tauri build
+```
+
+Build a no-install Windows portable ZIP:
+
+```powershell
+npm run portable:windows
+```
+
+This writes a runnable app folder and ZIP under `dist-portable`. For quick iteration after a build, run:
+
+```powershell
+npm run portable:windows:run
+```
+
+The underlying raw Tauri executable is also available at:
+
+```text
+src-tauri\target\release\vectorizer-ai-desktop.exe
 ```
 
 ## Release Builds
@@ -69,7 +89,7 @@ git tag desktop-v0.1.0
 git push origin desktop-v0.1.0
 ```
 
-The release workflow uses `tauri-apps/tauri-action` and uploads the generated installers as draft release assets for review before publication.
+The release workflow uses `tauri-apps/tauri-action` and uploads the generated installers as draft release assets for review before publication. Windows releases also include a `windows-x64-portable.zip` asset for no-install review.
 
 ## API Credentials
 

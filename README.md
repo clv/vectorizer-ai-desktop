@@ -60,6 +60,17 @@ Build desktop bundles:
 npm run tauri build
 ```
 
+## Release Builds
+
+GitHub Actions checks the app on Windows, macOS, and Ubuntu. To create a draft release with platform bundles, push a tag that starts with `desktop-v`:
+
+```powershell
+git tag desktop-v0.1.0
+git push origin desktop-v0.1.0
+```
+
+The release workflow uses `tauri-apps/tauri-action` and uploads the generated installers as draft release assets for review before publication.
+
 ## API Credentials
 
 The app asks for the Vectorizer.AI API Id and API Secret. If credential saving is enabled, only the secret is written to the operating system credential store. The API Id and other preferences are stored in the app settings JSON.

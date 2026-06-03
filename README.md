@@ -56,6 +56,14 @@ npm run desktop:dev
 
 This is the fastest local loop. It opens the native Tauri window and serves the frontend through Vite with live rebuilds.
 
+For review/testing of the latest compiled portable build, double-click `Launch Dev.bat` or run:
+
+```powershell
+.\Launch Dev.bat
+```
+
+That launcher only opens `dist-portable\windows-x64\Vectorizer.AI Desktop\Vectorizer.AI Desktop.exe`; it does not compile.
+
 Build desktop bundles:
 
 ```powershell

@@ -2,38 +2,23 @@
 setlocal
 
 cd /d "%~dp0"
-title Vectorizer.AI Desktop Dev
+title Vectorizer.AI Desktop
 
-if exist "%USERPROFILE%\.cargo\bin" (
-    set "PATH=%USERPROFILE%\.cargo\bin;%PATH%"
-)
+set "APP_EXE=%~dp0dist-portable\windows-x64\Vectorizer.AI Desktop\Vectorizer.AI Desktop.exe"
 
-where npm.cmd >nul 2>nul
-if errorlevel 1 (
-    echo Node.js/npm was not found on PATH.
-    echo Install Node.js, then run this launcher again.
+if not exist "%APP_EXE%" (
+    echo The portable development build was not found:
     echo.
+    echo   %APP_EXE%
+    echo.
+    echo Ask Codex to build the latest portable app, or run:
+    echo.
+    echo   npm.cmd run portable:windows
+    echo.
+    echo This launcher intentionally does not compile anything.
     pause
     exit /b 1
 )
 
-if not exist "node_modules" (
-    echo Installing npm dependencies...
-    call npm.cmd install
-    if errorlevel 1 (
-        echo.
-        echo npm install failed.
-        pause
-        exit /b 1
-    )
-)
-
-echo Launching Vectorizer.AI Desktop from the current source tree...
-echo.
-call npm.cmd run desktop:dev
-set "EXIT_CODE=%ERRORLEVEL%"
-
-echo.
-echo Vectorizer.AI Desktop dev process exited with code %EXIT_CODE%.
-pause
-exit /b %EXIT_CODE%
+start "" "%APP_EXE%"
+exit /b 0
